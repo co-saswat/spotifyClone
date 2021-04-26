@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { StyleSheet, FlatList, Text, View } from 'react-native';
 import AlbumCategory from '../components/albumCategory'
-import albumCategories from '../data/albumcategories';
+import albumCategories from '../data/albumCategories';
 
 
 export default function HomeScreen() {

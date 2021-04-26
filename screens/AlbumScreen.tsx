@@ -1,11 +1,28 @@
-import React from 'react'
-import { View, Text } from 'react-native'
+import React, {useEffect} from 'react'
+import { View, Text, FlatList } from 'react-native'
+import { useRoute } from '@react-navigation/native'
+import albumDetails from '../data/albumDetails'
+
+import SongListItem from '../components/songListItem'
 
 
 const AlbumScreen = () => {
+
+  const route = useRoute();
+
+  useEffect(()=> {
+    console.log(route);
+  }, []);
+
+
   return (
     <View>
-      <Text style={{color: 'white'}}>Hello World </Text>
+      <FlatList
+        data={albumDetails.songs}
+        renderItem={({item}) => <SongListItem song={item} />}
+        keyExtractor={(item) => item.id}
+
+      />
     </View>
   )
 }
