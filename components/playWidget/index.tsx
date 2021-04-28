@@ -18,10 +18,14 @@ const PlayWidget = () => {
 
   const [sound, setSound] = React.useState<Sound | null>(null);
   const [isPlaying, setIsPlaying] = React.useState<boolean>(true);
-  const [isLike, setIsLike] = React.useState<boolean>(false)
+  const [isLike, setIsLike] = React.useState<boolean>(false);
+  const [duration,setDuration] = React.useState<number|null>(null);
+  const [position,setPostion] = React.useState<number|null>(null);
 
   const onPlayerStatusUpdate = (status) => {
     setIsPlaying(status.isPlaying);
+    setDuration(status.durationMillis);
+    setPostion(status.positionMillis);
   }
 
   const playCurrentSong = async () => {
@@ -57,23 +61,32 @@ const PlayWidget = () => {
       await sound.playAsync();
     }
   }
+  
+  const getProgress = () => {
+    if (sound === null || duration === null || position === null) {
+      return 0;
+    } 
 
+    return (position/duration) * 100 ;
+  }
 
   const onLikePress = () => {
-    if(!sound) {
+    if (!sound) {
       return
     }
 
-    if(isLike) {
+    if (isLike) {
       setIsLike(false);
     } else {
       setIsLike(true);
-    } 
+    }
 
   }
 
   return (
     <View style={styles.container}>
+      <View style={[styles.progress, {width: `${getProgress()}%`}]} />
+      <View style={styles.row}>
       <Image source={{ uri: song.imageUri }} style={styles.image} />
       <View style={styles.containerText}>
         <View style={styles.textContainer}>
@@ -82,12 +95,13 @@ const PlayWidget = () => {
         </View>
         <View style={styles.iconsContainer}>
           <TouchableOpacity onPress={onLikePress}>
-          <AntDesign name={isLike ? 'heart' : 'hearto'} size={30} color={"white"} />
+            <AntDesign name={isLike ? 'heart' : 'hearto'} size={30} color={"white"} />
           </TouchableOpacity>
           <TouchableOpacity onPress={onPlayPausePress}>
             <FontAwesome name={isPlaying ? 'pause' : 'play'} size={30} color={"white"} />
           </TouchableOpacity>
         </View>
+      </View>
       </View>
     </View>
   )

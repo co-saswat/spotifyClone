@@ -5,11 +5,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 49,
     backgroundColor: '#131313',
-    flexDirection: 'row',
     padding: 10,
     width:'100%',
-    alignItems:'center',
-
   },
   title: {
     color: 'white',
@@ -39,6 +36,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: 100,
     justifyContent: 'space-around'
+  },
+  progress: {
+    height: 3,
+    backgroundColor: '#bcbcbc'
+  },
+  row: {
+    flexDirection: 'row',
   }
 })
 
